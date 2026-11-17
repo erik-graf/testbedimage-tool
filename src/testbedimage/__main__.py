@@ -20,12 +20,9 @@ def main():
     args = cli.parse_args()
     if args.subcommand is None:
         cli.print_help()
-    else:
-        result = args.func(args)
-        if result is not None:
-            sys.exit(result)
+        sys.exit(1)
 
-    sys.exit(1)
+    sys.exit(args.func(args))
 
 
 if __name__ == '__main__':

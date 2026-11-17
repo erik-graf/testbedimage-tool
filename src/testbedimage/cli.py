@@ -99,6 +99,7 @@ def deploy(args):
         tbi.deploy_images(sshconfig)
     except Exception as e:
         logger.critical(e)
+        return 1
 
 
 @subcommand([argument("-u", "--url", help="Url to the images",
@@ -118,6 +119,7 @@ def proxy_import(args):
         tbi.get_images(webcfg)
     except Exception as e:
         logger.critical(e)
+        return 1
 
 
 @subcommand([argument("-u", "--url", help="url to the images",
@@ -164,6 +166,7 @@ def import_images(args):
             return 0
     except Exception as e:
         logger.critical(e)
+        return 1
 
 
 @subcommand([argument("-I", "--images", help="imagenames seperated by comma",
@@ -176,6 +179,7 @@ def list_images(args):
         tbi.list_images()
     except Exception as e:
         logger.critical(e)
+        return 1
 
 
 @subcommand([argument("-I", "--images", help="imagenames seperated by comma",
@@ -188,6 +192,7 @@ def delete_images(args):
         tbi.delete_images()
     except Exception as e:
         logger.critical(e)
+        return 1
 
 
 @subcommand([argument("-u", "--url", help="url to the images",
@@ -200,3 +205,4 @@ def manifest(args):
         tbi.manifest(webcfg)
     except Exception as e:
         logger.critical(e)
+        return 1

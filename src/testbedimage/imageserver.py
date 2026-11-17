@@ -92,7 +92,8 @@ class ImageServer:
     def delete_image(self, img: openstack.image.v2.image.Image):
         self.conn.image.delete_image(img, ignore_missing=True)
 
-    def import_image_stream(self, imgmeta: ImageMeta, body, size):
+    def import_image_stream(self, imgmeta: ImageMeta, body, size,
+                            wait_time: int = 3600):
         stream = ImageStream(body, size)
         # Always create a new record, so failure cleanup cannot delete an
         # existing image with the same name.
@@ -107,7 +108,7 @@ class ImageServer:
             stream.verify(imgmeta)
             active = self.conn.image.wait_for_status(
                 image, status="active",
-                failures=["killed", "deleted", "error"], wait=3600)
+                failures=["killed", "deleted", "error"], wait=wait_time)
             if active.size is not None and active.size != size:
                 raise TestbedException(
                     f"Glance size mismatch for {imgmeta.name}")
